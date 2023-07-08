@@ -30,4 +30,8 @@ Route::get('/test', function(Request $request) {
     return $response;
 });
 
-Route::get('/products', [ProductController::class, 'index']);
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/{id}', [ProductController::class, 'show']);
+    Route::post('/', [ProductController::class, 'save']);
+});
