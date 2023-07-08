@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 
@@ -23,7 +24,8 @@ class ProductController extends Controller
     {
         $products = $this->product->all();
 
-        return response()->json($products);
+        //return response()->json($products);
+        return new ProductCollection($products);
     }
 
     public function show($id)

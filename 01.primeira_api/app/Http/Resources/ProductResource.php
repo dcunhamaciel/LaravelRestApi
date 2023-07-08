@@ -21,4 +21,9 @@ class ProductResource extends JsonResource
             'slug' => $this->slug
         ];
     }
+
+    public function with(Request $request)
+    {
+        return ['extra_single_data' => 'Retornar nesta camada.'];
+    }
 }
