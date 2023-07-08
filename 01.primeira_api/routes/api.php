@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,8 @@ Route::get('/test', function(Request $request) {
     $response->header('Content-Type', 'application/json');
 
     return $response;
+});
+
+Route::get('/products', function() {
+    return Product::all();
 });
