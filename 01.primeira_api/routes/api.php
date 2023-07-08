@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +38,5 @@ Route::prefix('products')->group(function () {
     Route::put('/', [ProductController::class, 'update']);
     Route::delete('/{id}', [ProductController::class, 'delete']);
 });
+
+Route::resource('/users', UserController::class);
