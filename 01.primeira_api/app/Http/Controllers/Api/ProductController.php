@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Repository\ProductRepository;
 
 class ProductController extends Controller
 {
@@ -22,26 +23,18 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $products = $this->product;
+        $productRepository = new ProductRepository($this->product);
 
         if ($request->has('conditions')) {
-            $conditions = explode(';', $request->get('conditions'));
-
-            foreach($conditions as $condition) {
-                $expression = explode(':', $condition);
-                
-                $products = $products->where($expression[0], $expression[1], $expression[2]);
-            }
+            $productRepository->selectConditions($request->get('conditions'));
         }
-
+        
         if ($request->has('fields')) {
-            $fields = $request->get('fields');
-
-            $products = $products->selectRaw($fields);
+            $productRepository->selectFilter($request->get('fields'));
         }
 
         //return response()->json($products);
-        return new ProductCollection($products->paginate(10));
+        return new ProductCollection($productRepository->getResult()->paginate(10));
     }
 
     public function show($id)
