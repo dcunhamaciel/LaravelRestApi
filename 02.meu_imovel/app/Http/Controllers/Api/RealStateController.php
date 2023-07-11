@@ -57,4 +57,20 @@ class RealStateController extends Controller
             return response()->json(['error' => $error->getMessage()], 401);
         }
     }
+
+    public function destroy(int $id)
+    {
+        try {
+            $realState = $this->realState->findOrFail($id);
+            $realState->delete($id);
+
+            return response()->json([
+                'data' => [
+                    'msg' => 'Imóvel removido com sucesso!'
+                ]
+            ]);
+        } catch(\Exception $error) {
+            return response()->json(['error' => $error->getMessage()], 401);
+        }
+    }
 }
