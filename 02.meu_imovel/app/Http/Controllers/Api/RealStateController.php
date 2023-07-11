@@ -23,6 +23,17 @@ class RealStateController extends Controller
         return response()->json($realState, 200);
     }
 
+    public function show(int $id)
+    {
+        try {
+            $realState = $this->realState->findOrFail($id);
+            
+            return response()->json($realState, 200);
+        } catch(\Exception $error) {
+            return response()->json(['error' => $error->getMessage()], 401);
+        }
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();
