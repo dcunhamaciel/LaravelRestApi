@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function() {
-    Route::prefix('real-states')->name('real_states.')->group(function() {
-        Route::resource('/', RealStateController::class);
+    Route::name('real_states.')->group(function() {
+        Route::resource('real-states', RealStateController::class);
     });
 });
