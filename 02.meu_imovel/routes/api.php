@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RealStateController;
 
 /*
@@ -20,6 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function() {
+    Route::name('users.')->group(function() {
+        Route::resource('users', UserController::class);
+    });
+    
     Route::name('real_states.')->group(function() {
         Route::resource('real-states', RealStateController::class);
     });
