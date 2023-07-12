@@ -36,6 +36,7 @@ class UserController extends Controller
             return response()->json($user, 200);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
+
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -49,6 +50,7 @@ class UserController extends Controller
 
         if (!$request->has('password') || !$request->get('password')) {
             $message = new ApiMessages('É necessário informa uma senha para o usuário!');
+
             return response()->json($message->getMessage(), 401);   
         }
 
@@ -63,6 +65,7 @@ class UserController extends Controller
             ]);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
+
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -93,6 +96,7 @@ class UserController extends Controller
             ]);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
+
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -113,6 +117,7 @@ class UserController extends Controller
             ]);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
+
             return response()->json($message->getMessage(), 401);
         }
     }

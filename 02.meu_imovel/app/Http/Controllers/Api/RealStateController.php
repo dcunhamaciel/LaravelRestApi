@@ -31,6 +31,7 @@ class RealStateController extends Controller
             return response()->json($realState, 200);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
+
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -49,6 +50,7 @@ class RealStateController extends Controller
             ]);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
+
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -68,6 +70,7 @@ class RealStateController extends Controller
             ]);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
+
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -85,6 +88,7 @@ class RealStateController extends Controller
             ]);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
+
             return response()->json($message->getMessage(), 401);
         }
     }
