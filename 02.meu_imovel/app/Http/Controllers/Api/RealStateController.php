@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\RealStateRequest;
 use App\Models\RealState;
-use Ramsey\Uuid\Type\Integer;
 
 class RealStateController extends Controller
 {
@@ -34,7 +33,7 @@ class RealStateController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(RealStateRequest $request)
     {
         $data = $request->all();
 
@@ -51,7 +50,7 @@ class RealStateController extends Controller
         }
     }
 
-    public function update(Request $request, int $id)
+    public function update(RealStateRequest $request, int $id)
     {
         $data = $request->all();
 
