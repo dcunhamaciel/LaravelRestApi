@@ -87,6 +87,8 @@ class UserController extends Controller
     public function update(UserRequest $request, string $id)
     {
         $data = $request->all();
+        $profile = $data['profile'];
+        $profile['social_networks'] = serialize($profile['social_networks']);
 
         if (!$request->has('password')) {
             if ($request->get('password')) {
@@ -96,9 +98,16 @@ class UserController extends Controller
             }
         }
 
+        Validator::make($data, [
+            'profile.phone' => 'required',
+            'profile.mobile_phone' => 'required'
+        ]);
+
         try {
             $user = $this->user->findOrFail($id);
+            
             $user->update($data);
+            $user->profile()->update($profile);
 
             return response()->json([
                 'data' => [
