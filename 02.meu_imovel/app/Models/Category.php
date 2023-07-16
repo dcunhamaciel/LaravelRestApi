@@ -14,4 +14,9 @@ class Category extends Model
         'description',
         'slug'
     ];
+
+    public function realStates()
+    {
+        return $this->belongsToMany(RealState::class);
+    }
 }
