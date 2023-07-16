@@ -43,7 +43,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function real_state()
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    public function realStates()
     {
         return $this->hasMany(RealState::class);
     }
