@@ -32,8 +32,9 @@ class UserController extends Controller
     public function show(string $id)
     {
         try {
-            $user = $this->user->findOrFail($id);
-            
+            $user = $this->user->with('profile')->findOrFail($id);
+            $user->profile->social_networks = unserialize($user->profile->social_networks);
+
             return response()->json($user, 200);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
