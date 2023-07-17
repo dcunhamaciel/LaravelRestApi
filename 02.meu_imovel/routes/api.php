@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RealStateController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\RealStatePhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,9 @@ Route::prefix('v1')->group(function() {
     Route::name('categories.')->group(function() {
         Route::resource('categories', CategoryController::class);
         Route::get('categories/{id}/real-states', [CategoryController::class, 'realStates']);
+    });
+
+    Route::name('photos.')->group(function() {
+        Route::put('photos/{photoId}/{realStateId}', [RealStatePhotoController::class, 'setThumb']);
     });
 });
