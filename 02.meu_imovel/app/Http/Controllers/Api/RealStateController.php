@@ -26,7 +26,7 @@ class RealStateController extends Controller
     public function show(int $id)
     {
         try {
-            $realState = $this->realState->findOrFail($id);
+            $realState = $this->realState->with('photos')->findOrFail($id);
             
             return response()->json($realState, 200);
         } catch(\Exception $error) {
