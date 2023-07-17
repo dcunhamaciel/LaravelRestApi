@@ -38,5 +38,6 @@ Route::prefix('v1')->group(function() {
 
     Route::name('photos.')->group(function() {
         Route::put('photos/{photoId}/{realStateId}', [RealStatePhotoController::class, 'setThumb']);
+        Route::delete('photos/{id}', [RealStatePhotoController::class, 'remove']);    
     });
 });

@@ -41,4 +41,36 @@ class RealStatePhotoController extends Controller
             return response()->json($message->getMessage(), 401);
         }
     }
+
+    public function remove($photoId)
+    {
+        try {
+            $photo = $this->realStatePhoto->find($photoId);
+            
+            if (!$photo) { 
+                $message = new ApiMessages('Foto não localizada!');
+
+                return response()->json($message->getMessage(), 401);
+            }
+
+            if ($photo->is_thumb) { 
+                $message = new ApiMessages('Não é possível remover foto de Thumb!');
+
+                return response()->json($message->getMessage(), 401);
+            }
+
+            Storage::disk('public')->delete($photo->photo);
+            $photo->delete();
+
+            return response()->json([
+                'data' => [
+                    'msg' => 'Foto removida com sucesso!'
+                ]
+            ]);
+        } catch(\Exception $error) {
+            $message = new ApiMessages($error->getMessage());
+
+            return response()->json($message->getMessage(), 401);
+        }
+    }
 }
