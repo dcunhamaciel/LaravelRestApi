@@ -22,6 +22,9 @@ Route::prefix('v1')->group(function() {
     Route::post('login', [LoginJwtController::class, 'login']);
 
     Route::middleware('auth:api')->group(function() {
+        Route::get('logout', [LoginJwtController::class, 'logout']);
+        Route::post('refresh', [LoginJwtController::class, 'refresh']);
+
         Route::name('users.')->group(function() {
             Route::resource('users', UserController::class);
         });
