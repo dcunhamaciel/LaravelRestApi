@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\LoginJwtController;
 use App\Http\Controllers\Api\UserController;
@@ -19,28 +18,26 @@ use App\Http\Controllers\Api\RealStatePhotoController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('v1')->group(function() {
-    Route::name('login')->post('/login', [LoginJwtController::class, 'login']);
+    Route::post('login', [LoginJwtController::class, 'login']);
 
-    Route::name('users.')->group(function() {
-        Route::resource('users', UserController::class);
-    });
+    Route::middleware('auth:api')->group(function() {
+        Route::name('users.')->group(function() {
+            Route::resource('users', UserController::class);
+        });
+
+        Route::name('real_states.')->group(function() {
+            Route::resource('real-states', RealStateController::class);
+        });
     
-    Route::name('real_states.')->group(function() {
-        Route::resource('real-states', RealStateController::class);
-    });
-
-    Route::name('categories.')->group(function() {
-        Route::resource('categories', CategoryController::class);
-        Route::get('categories/{id}/real-states', [CategoryController::class, 'realStates']);
-    });
-
-    Route::name('photos.')->group(function() {
-        Route::put('photos/{photoId}/{realStateId}', [RealStatePhotoController::class, 'setThumb']);
-        Route::delete('photos/{id}', [RealStatePhotoController::class, 'remove']);    
+        Route::name('categories.')->group(function() {
+            Route::resource('categories', CategoryController::class);
+            Route::get('categories/{id}/real-states', [CategoryController::class, 'realStates']);
+        });
+    
+        Route::name('photos.')->group(function() {
+            Route::put('photos/{photoId}/{realStateId}', [RealStatePhotoController::class, 'setThumb']);
+            Route::delete('photos/{id}', [RealStatePhotoController::class, 'remove']);    
+        });        
     });
 });
