@@ -18,15 +18,15 @@ class RealStateController extends Controller
 
     public function index()
     {
-        $realState = $this->realState->paginate(10);
+        $realStates = auth('api')->user()->realStates()->paginate(10);
 
-        return response()->json($realState, 200);
+        return response()->json($realStates, 200);
     }
 
     public function show(int $id)
     {
         try {
-            $realState = $this->realState->with('photos')->findOrFail($id);
+            $realState = auth('api')->user()->realStates()->with('photos')->findOrFail($id);
             
             return response()->json($realState, 200);
         } catch(\Exception $error) {
@@ -39,6 +39,7 @@ class RealStateController extends Controller
     public function store(RealStateRequest $request)
     {
         $data = $request->all();
+        $data['user_id'] = auth('api')->user()->id;
         $images = $request->file('images');
         
         try {
@@ -80,7 +81,7 @@ class RealStateController extends Controller
         $images = $request->file('images');
 
         try {
-            $realState = $this->realState->findOrFail($id);
+            $realState = auth('api')->user()->realStates()->findOrFail($id);
             $realState->update($data);
 
             if (isset($data['categories']) && count($data['categories']) > 0) {
@@ -116,7 +117,7 @@ class RealStateController extends Controller
     public function destroy(int $id)
     {
         try {
-            $realState = $this->realState->findOrFail($id);
+            $realState = auth('api')->user()->realStates()->findOrFail($id);
             $realState->delete($id);
 
             return response()->json([
