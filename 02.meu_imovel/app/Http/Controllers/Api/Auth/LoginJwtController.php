@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Api\Messages\ApiMessages;
 
 class LoginJwtController extends Controller
@@ -11,7 +12,12 @@ class LoginJwtController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->all(['email', 'password']);
-        
+
+        Validator::make($credentials, [
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ])->validate();
+
         $token = auth('api')->attempt($credentials);
        
         if (!$token) {
