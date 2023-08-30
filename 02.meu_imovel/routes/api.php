@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RealStateController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\RealStatePhotoController;
+use App\Http\Controllers\Api\RealStateSearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,11 @@ use App\Http\Controllers\Api\RealStatePhotoController;
 Route::prefix('v1')->group(function() {
     Route::post('login', [LoginJwtController::class, 'login']);
 
+    Route::get('/search', [RealStateSearchController::class, 'index']);
+
     Route::middleware('auth:api')->group(function() {
         Route::get('logout', [LoginJwtController::class, 'logout']);
-        Route::post('refresh', [LoginJwtController::class, 'refresh']);
+        Route::post('refresh', [LoginJwtController::class, 'refresh']);        
 
         Route::name('users.')->group(function() {
             Route::resource('users', UserController::class);

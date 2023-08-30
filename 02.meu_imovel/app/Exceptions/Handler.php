@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
             if (!empty($request->route()) && in_array("api", explode("/", $request->route()->getPrefix())))
                 switch ($e->getStatusCode()) {
                     case 403:
-                        throw new ResponseApi("Token não possui um formato válido.", 401);
+                        throw new ResponseApi("Token não possui um formato válido.", 403);
                     case 401:
                         throw new ResponseApi("Não foi possível autenticar na API.", 401);
                     default:
