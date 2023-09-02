@@ -23,6 +23,7 @@ Route::prefix('v1')->group(function() {
     Route::post('login', [LoginJwtController::class, 'login']);
 
     Route::get('/search', [RealStateSearchController::class, 'index']);
+    Route::get('/search/{id}', [RealStateSearchController::class, 'show']);
 
     Route::middleware('auth:api')->group(function() {
         Route::get('logout', [LoginJwtController::class, 'logout']);

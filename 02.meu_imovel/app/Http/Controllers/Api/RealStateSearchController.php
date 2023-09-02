@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\RealState;
 use App\Repository\RealStateRepository;
+use App\Api\Messages\ApiMessages;
 
 class RealStateSearchController extends Controller
 {
@@ -36,5 +37,17 @@ class RealStateSearchController extends Controller
 
     public function show(int $id)
     {
+        try {
+            $realState = $this->realState
+                ->with('address')
+                ->with('photos')
+                ->findOrFail($id);
+
+            return response()->json($realState, 200);
+        } catch (\Exception $error) {
+            $message = new ApiMessages($error->getMessage());
+
+            return response()->json($message->getMessage(), 401);
+        }
     }
 }
