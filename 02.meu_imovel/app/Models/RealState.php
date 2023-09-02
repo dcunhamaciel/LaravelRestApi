@@ -22,7 +22,7 @@ class RealState extends Model
         'slug'
     ];
 
-    protected $appends = ['_links'];
+    protected $appends = ['_links', 'thumb'];
 
     public function categories()
     {
@@ -50,5 +50,16 @@ class RealState extends Model
             'href' => route('real_states.real-states.show', ['real_state' => $this->id]),
             'rel' => 'Imóveis'
         ];
+    }
+
+    public function getThumbAttribute()
+    {
+        $thumb = $this->photos()->where('is_thumb', true)->first();
+
+        if (is_null($thumb)) {
+            return null;
+        }
+
+        return $thumb->photo;
     }
 }

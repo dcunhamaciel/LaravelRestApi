@@ -26,8 +26,11 @@ class RealStateController extends Controller
     public function show(int $id)
     {
         try {
-            $realState = auth('api')->user()->realStates()->with('photos')->findOrFail($id);
-            
+            $realState = auth('api')->user()->realStates()
+                ->with('photos')                
+                ->findOrFail($id)
+                ->makeHidden('thumb');
+
             return response()->json($realState, 200);
         } catch(\Exception $error) {
             $message = new ApiMessages($error->getMessage());
